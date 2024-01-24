@@ -1,8 +1,8 @@
-const containerVideos = document.querySelector(".videos__container"); //aqui vamos capturar a lista de videos no HTML
+const containerVideos = document.querySelector(".videos__container");
 
 const api = fetch("http://localhost:3000/videos")
-.then(res => res.json()) //recebe a resposta JSON
-.then((videosRecebidos) => //executa a resposta que foi recebida
+.then(res => res.json())
+.then((videosRecebidos) =>
     videosRecebidos.forEach((videoEspecifico) => {
         containerVideos.innerHTML += `
         <li class="videos__item">
@@ -17,5 +17,8 @@ const api = fetch("http://localhost:3000/videos")
     })
 )
 
-//tag iframe = permite incorporar videos na pagina
-//allowfullscreen = permite exibir os videos em tela cheia
+//Tratamento de erros utilizando o .catch:
+
+.catch((error)=>{
+    containerVideos.innerHTML = `<p>Houve um erro ao carregar os vídeos: ${error}</p>`;
+})
