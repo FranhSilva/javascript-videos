@@ -22,9 +22,30 @@ async function buscarEMostrarVideos(){
             })
     } catch(error){ //se ele encontrar algum erro irá executar o que está abaixo:
         containerVideos.innerHTML = `<p> Houve um erro ao carregar os vídeos: ${error}</p>`
-    } finally {
-        alert("Essa mensagem sempre irá aparecer");
     }
 }
 
 buscarEMostrarVideos();
+
+const barraDePesquisa = document.querySelector(".pesquisar__input");
+
+barraDePesquisa.addEventListener("input", fitrarPesquisa); //irá capturar o que foi digitado na barra de pesquisa.
+
+function fitrarPesquisa(){ //a const videos criada abaixo verifica se o que foi digitado corresponde a algum dos vídeos disponíveis.
+    const videos = document.querySelectorAll(".videos__item");
+
+    if(barraDePesquisa.value != ""){
+        for (let video of videos){
+            let titulo = video.querySelector(".titulo-video").textContent.toLowerCase();//textContent captura o conteudo de texto do titulo... toLowerCase coloca o titulo dos vídeos em minúsculo para que a comparação seja possível
+            let valorFiltro = barraDePesquisa.value.toLowerCase();//o texto digitado na barra de pesquisa é transformado em minúsculo para ser possível a comparação
+        
+            if(!titulo.includes(valorFiltro)){
+                video.style.display = "none";//se o titulo do video não é igual ao que foi pesquisado ele será ocultado na tela, ou seja, todos os outros videos irão sumir da tela, exceto aquele que foi pesquisado.
+            }else{
+                video.style.display = "block";//se o video e a descrição na pesquisa forem iguais, vamos exibir o vídeo.
+            }
+        }
+    }else{
+        video.style.display = "block"; //se a barra de pesquisa estiver vazia, todos os videos devem estar visíveis na página.
+    }
+}
